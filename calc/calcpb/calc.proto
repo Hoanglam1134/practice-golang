@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package calc;
+option go_package="/.calcpb";
+
+message SumRequest{
+    int32 num1 = 1;
+    int32 num2 = 2;
+}
+
+message SumResponse{
+    int32 result = 1;
+}
+
+message PPRequest{
+    int32 num = 1;
+}
+
+message PPResponse{
+    int32 num = 1;
+}
+service CalcService{
+    rpc Sum(SumRequest) returns (SumResponse){}
+    rpc PrintPrime(PPRequest) returns (stream PPResponse){}
+}
