@@ -1,0 +1,22 @@
+syntax = "proto3";
+package api;
+message GetAmountRequest{
+    int32 id = 1;
+}
+message GetAmountResponse{
+    int32 amount = 1;
+}
+message UpdateAmountRequest{
+    int32 id = 1;
+    // so luong tang hay giam
+    int32 quantity = 2;
+}
+message UpdateAmountResponse{
+    int32 id = 1;
+    // so luong ton kho sau khi update
+    int32 amount = 2;
+}
+service Inventory{
+    rpc GetAmount(GetAmountRequest) returns (GetAmountResponse){}
+    rpc UpdateAmount(UpdateAmountRequest) returns (UpdateAmountResponse){}
+}
