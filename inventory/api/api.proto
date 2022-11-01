@@ -1,22 +1,24 @@
 syntax = "proto3";
+option go_package = "practice-golang/inventory/api";
 package api;
-message GetAmountRequest{
-    int32 id = 1;
+
+message GetQuantityRequest{
+    int32 sku = 1;
 }
-message GetAmountResponse{
-    int32 amount = 1;
+message GetQuantityResponse{
+    int32 quantity = 1;
 }
-message UpdateAmountRequest{
-    int32 id = 1;
+message UpdateQuantityRequest{
+    int32 sku = 1;
     // so luong tang hay giam
     int32 quantity = 2;
 }
-message UpdateAmountResponse{
+message UpdateQuantityResponse{
     int32 id = 1;
     // so luong ton kho sau khi update
-    int32 amount = 2;
+    int32 quantity = 2;
 }
 service Inventory{
-    rpc GetAmount(GetAmountRequest) returns (GetAmountResponse){}
-    rpc UpdateAmount(UpdateAmountRequest) returns (UpdateAmountResponse){}
+    rpc GetQuantity(GetQuantityRequest) returns (GetQuantityResponse){}
+    rpc UpdateQuantity(UpdateQuantityRequest) returns (UpdateQuantityResponse){}
 }

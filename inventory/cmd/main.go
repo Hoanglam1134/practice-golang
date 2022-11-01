@@ -3,16 +3,18 @@ package main
 import (
 	"database/sql"
 	"log"
+	"net"
 	"todolist-grpc/inventory/api"
 	inventory "todolist-grpc/inventory/sqlc"
 
 	_ "github.com/lib/pq"
+	"google.golang.org/grpc"
 )
 
 const (
 	dbDriver      = "postgres"
 	dbSource      = "postgres://postgres:postgres@localhost:5432/inventory?sslmode=disable"
-	serverAddress = "0.0.0.0:8080"
+	serverAddress = "0.0.0.0:9090"
 )
 
 func main() {
@@ -24,8 +26,19 @@ func main() {
 	store := inventory.NewStore(conn)
 	server := api.NewServer(store)
 
-	err = server.Start(serverAddress)
+	grpcServer := grpc.NewServer()
+	api.RegisterInventoryServer(grpcServer, server)
+
+	listener, err := net.Listen("tcp", serverAddress)
+
 	if err != nil {
-		log.Fatal("Cannot start the server:", err)
+		log.Fatal("Cannot create listener")
+	}
+
+	log.Printf("Starting gRPC server at %s", listener.Addr().String())
+	err = grpcServer.Serve(listener)
+
+	if err != nil {
+		log.Fatal("cannot serve gRPC server")
 	}
 }
