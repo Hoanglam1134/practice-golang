@@ -30,3 +30,72 @@ func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (I
 	err := row.Scan(&i.Sku, &i.Quantity)
 	return i, err
 }
+
+const deleteProduct = `-- name: DeleteProduct :exec
+DELETE FROM inventory
+WHERE sku = $1
+`
+
+func (q *Queries) DeleteProduct(ctx context.Context, sku string) error {
+	_, err := q.db.ExecContext(ctx, deleteProduct, sku)
+	return err
+}
+
+const getProduct = `-- name: GetProduct :one
+SELECT sku, quantity FROM inventory
+WHERE sku = $1 LIMIT 1
+`
+
+func (q *Queries) GetProduct(ctx context.Context, sku string) (Inventory, error) {
+	row := q.db.QueryRowContext(ctx, getProduct, sku)
+	var i Inventory
+	err := row.Scan(&i.Sku, &i.Quantity)
+	return i, err
+}
+
+const listProducts = `-- name: ListProducts :many
+SELECT sku, quantity FROM inventory
+ORDER BY sku
+`
+
+func (q *Queries) ListProducts(ctx context.Context) ([]Inventory, error) {
+	rows, err := q.db.QueryContext(ctx, listProducts)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Inventory
+	for rows.Next() {
+		var i Inventory
+		if err := rows.Scan(&i.Sku, &i.Quantity); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const updateProduct = `-- name: UpdateProduct :one
+UPDATE inventory
+set quantity = $2
+WHERE sku = $1
+RETURNING sku, quantity
+`
+
+type UpdateProductParams struct {
+	Sku      string `json:"sku"`
+	Quantity int32  `json:"quantity"`
+}
+
+func (q *Queries) UpdateProduct(ctx context.Context, arg UpdateProductParams) (Inventory, error) {
+	row := q.db.QueryRowContext(ctx, updateProduct, arg.Sku, arg.Quantity)
+	var i Inventory
+	err := row.Scan(&i.Sku, &i.Quantity)
+	return i, err
+}
