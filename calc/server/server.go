@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
-	__calcpb "todolist-grpc/calc/calcpb"
+	__calcpb "practice-golang/calc/calcpb"
 
 	"google.golang.org/grpc"
 )

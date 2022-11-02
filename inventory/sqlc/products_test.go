@@ -3,8 +3,8 @@ package inventory
 import (
 	"context"
 	"database/sql"
+	"practice-golang/inventory/utils"
 	"testing"
-	"todolist-grpc/inventory/utils"
 
 	"github.com/stretchr/testify/require"
 )

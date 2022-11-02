@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"log"
-	__calcpb "todolist-grpc/calc/calcpb"
+	__calcpb "practice-golang/calc/calcpb"
 
 	"google.golang.org/grpc"
 )

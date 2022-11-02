@@ -1,7 +1,7 @@
 package api
 
 import (
-	inventory "todolist-grpc/inventory/sqlc"
+	inventory "practice-golang/inventory/sqlc"
 )
 
 type Server struct {

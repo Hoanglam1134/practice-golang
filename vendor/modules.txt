@@ -79,8 +79,8 @@ github.com/ugorji/go/codec
 # golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97
 ## explicit; go 1.17
 golang.org/x/crypto/sha3
-# golang.org/x/net v0.1.0
-## explicit; go 1.17
+# golang.org/x/net v0.0.0-20210226172049-e18ecbb05110
+## explicit; go 1.11
 golang.org/x/net/http/httpguts
 golang.org/x/net/http2
 golang.org/x/net/http2/h2c
@@ -88,12 +88,13 @@ golang.org/x/net/http2/hpack
 golang.org/x/net/idna
 golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
-# golang.org/x/sys v0.1.0
+# golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069
 ## explicit; go 1.17
 golang.org/x/sys/cpu
+golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
-# golang.org/x/text v0.4.0
-## explicit; go 1.17
+# golang.org/x/text v0.3.6
+## explicit; go 1.11
 golang.org/x/text/internal/language
 golang.org/x/text/internal/language/compact
 golang.org/x/text/internal/tag
@@ -102,8 +103,8 @@ golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
-# google.golang.org/genproto v0.0.0-20221018160656-63c7b68cfc55
-## explicit; go 1.19
+# google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013
+## explicit; go 1.11
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.50.1
 ## explicit; go 1.17

@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"log"
 	"net"
-	"todolist-grpc/inventory/api"
-	inventory "todolist-grpc/inventory/sqlc"
+	"practice-golang/inventory/api"
+	inventory "practice-golang/inventory/sqlc"
 
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"

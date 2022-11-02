@@ -1,0 +1,30 @@
+syntax = "proto3";
+option go_package = "practice-golang/service-order/api";
+package api;
+
+message CreateOrderRequest{
+    int32 id = 1;
+    string sku = 2;
+    int32 quantity = 3;
+}
+
+message CreateOrderResponse{
+    int32 id = 1;
+    string sku = 2;
+    int32 quantity = 3;
+}
+
+message CompleteOrderRequest{
+    int32 id = 1;
+}
+
+message CompleteOrderResponse{
+    int32 id = 1;
+    string sku = 2;
+    int32 quantity = 3;
+}
+
+service Orders{
+    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse){}
+    rpc CompleteOrder(CompleteOrderRequest) returns (CompleteOrderResponse){}
+}

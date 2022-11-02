@@ -3,18 +3,18 @@ option go_package = "practice-golang/inventory/api";
 package api;
 
 message GetQuantityRequest{
-    int32 sku = 1;
+    string sku = 1;
 }
 message GetQuantityResponse{
     int32 quantity = 1;
 }
 message UpdateQuantityRequest{
-    int32 sku = 1;
+    string sku = 1;
     // so luong tang hay giam
     int32 quantity = 2;
 }
 message UpdateQuantityResponse{
-    int32 id = 1;
+    string sku = 1;
     // so luong ton kho sau khi update
     int32 quantity = 2;
 }

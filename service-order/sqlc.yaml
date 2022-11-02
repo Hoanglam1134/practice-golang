@@ -1,0 +1,11 @@
+version: "1"
+packages:
+  - path: "./sqlc"
+    name: "orders"
+    queries: "./sql/queries"
+    schema: "./sql/migration"
+    engine: "postgresql"
+    emit_json_tags: true
+    emit_prepared_queries: false
+    emit_interface: false
+    emit_exact_table_names: false

@@ -1,7 +1,7 @@
 package httpapi
 
 import (
-	inventory "todolist-grpc/inventory/sqlc"
+	inventory "practice-golang/inventory/sqlc"
 
 	"github.com/gin-gonic/gin"
 )
