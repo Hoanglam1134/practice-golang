@@ -35,7 +35,7 @@ func (server *Server) CompleteOrder(ctx context.Context, req *api.CompleteOrderR
 	log.Printf("order after query: %s : %d", order.Sku, order.Quantity)
 
 	// check ton kho ben Inventory Service
-	inventoryClient := NewClientInventory()
+	inventoryClient, _ := NewClientInventory()
 	product, errClient := inventoryClient.GetQuantity(ctx, &inventoryApi.GetQuantityRequest{
 		Sku: order.Sku,
 	})

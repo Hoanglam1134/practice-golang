@@ -1,8 +1,15 @@
 package orders
 
 import (
+	"context"
 	"database/sql"
 )
+
+type StoreMock interface {
+	CreateOrder(ctx context.Context, arg CreateOrderParams) (Order, error)
+	GetOrder(ctx context.Context, id int32) (Order, error)
+	UpdateOrder(ctx context.Context, arg UpdateOrderParams) (Order, error)
+}
 
 type Store struct {
 	*Queries
@@ -34,7 +41,7 @@ func NewStore(db *sql.DB) *Store {
 // 	return tx.Commit()
 // }
 
-// func (store *Store) CreateOrder (ctx context.Context, sku string, quantity int) (Order, error) {
+// func (store *Store) CreateOrderTx(ctx context.Context, sku string, quantity int) (Order, error) {
 // 	var product Order
 // 	var errDB error
 // 	err := store.execTx(ctx, func(q *Queries) error {
