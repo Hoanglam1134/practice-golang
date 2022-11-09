@@ -5,7 +5,7 @@ import (
 	"database/sql"
 )
 
-type StoreMock interface {
+type StoreQuerier interface {
 	CreateOrder(ctx context.Context, arg CreateOrderParams) (Order, error)
 	GetOrder(ctx context.Context, id int32) (Order, error)
 	UpdateOrder(ctx context.Context, arg UpdateOrderParams) (Order, error)

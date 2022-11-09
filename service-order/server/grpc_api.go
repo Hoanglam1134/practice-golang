@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"log"
 	inventoryApi "practice-golang/inventory/api"
 	"practice-golang/service-order/api"
@@ -15,7 +16,8 @@ func (server *Server) CreateOrder(ctx context.Context, req *api.CreateOrderReque
 		Quantity: req.GetQuantity(),
 	})
 	if err != nil {
-		log.Fatalf("error when create product %v", err)
+		log.Printf("error when create product %v", err)
+		return nil, err
 	}
 	resp := &api.CreateOrderResponse{
 		Id:       product.ID,
@@ -30,13 +32,13 @@ func (server *Server) CompleteOrder(ctx context.Context, req *api.CompleteOrderR
 	id := req.GetId()
 	order, err := server.store.GetOrder(ctx, id)
 	if err != nil {
-		log.Fatal("error when query get order")
+		log.Print("error when query get order")
+		return nil, err
 	}
 	log.Printf("order after query: %s : %d", order.Sku, order.Quantity)
 
 	// check ton kho ben Inventory Service
-	inventoryClient, _ := NewClientInventory()
-	product, errClient := inventoryClient.GetQuantity(ctx, &inventoryApi.GetQuantityRequest{
+	product, errClient := server.inventoryClient.GetQuantity(ctx, &inventoryApi.GetQuantityRequest{
 		Sku: order.Sku,
 	})
 	if errClient != nil {
@@ -45,18 +47,18 @@ func (server *Server) CompleteOrder(ctx context.Context, req *api.CompleteOrderR
 
 	// Kiem tra du ton, neu khong du thi return nil
 	if product.Quantity < order.Quantity {
-		log.Fatal("Khong du ton kho!")
-		return nil, nil
+		return nil, errors.New("Khong du ton kho!")
 	}
 
 	// if the quantity of product is still enough, decrease the quantity
-	_, errClient = inventoryClient.UpdateQuantity(ctx, &inventoryApi.UpdateQuantityRequest{
+	_, errClient = server.inventoryClient.UpdateQuantity(ctx, &inventoryApi.UpdateQuantityRequest{
 		Sku:      order.Sku,
 		Quantity: order.Quantity,
 	})
 
 	if errClient != nil {
-		log.Fatal("Error when update quantity from inventory service")
+		log.Print("Error when update quantity from inventory service")
+		return nil, errClient
 	}
 
 	resp := &api.CompleteOrderResponse{

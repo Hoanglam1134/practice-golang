@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"net"
+	"practice-golang/service-order/adapter"
 	"practice-golang/service-order/api"
 	"practice-golang/service-order/server"
 	orders "practice-golang/service-order/sqlc"
@@ -24,8 +25,9 @@ func main() {
 		log.Fatal("Cannnot connect to Db:", err)
 	}
 
+	cc := adapter.NewClientInventory()
 	store := orders.NewStore(conn)
-	server := server.NewServer(store)
+	server := server.NewServer(store, cc)
 
 	grpcServer := grpc.NewServer()
 	api.RegisterOrdersServer(grpcServer, server)

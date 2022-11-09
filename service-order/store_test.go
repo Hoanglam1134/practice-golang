@@ -32,7 +32,7 @@ func TestCreateOrder(t *testing.T) {
 				},
 			},
 			want: &orders.Order{
-				ID:       2,
+				ID:       1,
 				Sku:      "Laptop",
 				Quantity: 10,
 			},
@@ -54,7 +54,7 @@ func TestCreateOrder(t *testing.T) {
 	}
 
 	for _, tc := range testcases {
-		mockStore := &mocks.StoreMock{}
+		mockStore := &mocks.StoreQuerier{}
 		t.Run(tc.name, func(t *testing.T) {
 			switch tc.name {
 			case "TestCreateOrder succeed":

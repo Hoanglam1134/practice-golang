@@ -46,7 +46,7 @@ func callCompleteOrder(c api.OrdersClient) {
 	})
 
 	if err != nil {
-		log.Fatalf("Error when call complete order: %v", err)
+		log.Printf("Error when call complete order: %v", err)
 	}
 
 	log.Printf("response of api call for Tablet update -2: %v:%v", resp.GetSku(), resp.GetQuantity())
